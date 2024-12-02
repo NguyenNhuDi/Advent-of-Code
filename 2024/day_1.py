@@ -1,17 +1,8 @@
 from sys import stdin
-from sys import argv
 
-
-def part_1():
-    l, r = [], []
-    for i in stdin:
-        left, right = map(int, i.split())
-        l.append(left)
-        r.append(right)
-
+def part_1(l, r):
     l.sort()
     r.sort()
-
     ans = 0
     for i in range(len(l)):
         ans += abs(l[i] - r[i])
@@ -19,18 +10,7 @@ def part_1():
     print(ans)
 
 
-def part_2():
-    l = []
-    r = {}
-    for i in stdin:
-        left, right = map(int, i.split())
-        l.append(left)
-
-        if right in r:
-            r[right] += 1
-        else:
-            r[right] = 1
-
+def part_2(l, r):
     ans = 0
     for num in l:
         if num in r:
@@ -39,10 +19,14 @@ def part_2():
 
 
 if __name__ == '__main__':
-    if len(argv) != 2:
-        raise IOError(f'Usage: python3 day_1.py [1|2]')
+    l, r1, r2 = [], [], {}
+    for i in stdin:
+        left, right = map(int, i.split())
+        l.append(left)
+        r1.append(right)
+        if right in r2: r2[right] += 1
+        else: r2[right] = 1
 
-    if argv[1] == '1':
-        part_1()
-    else:
-        part_2()
+
+    part_1(l, r1)
+    part_2(l, r2)
